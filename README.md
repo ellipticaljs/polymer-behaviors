@@ -1,9 +1,7 @@
 Elliptical behaviors for Polymer components
 ===========================
 
-# NOTICE
 
-This repo is now deprecated. The project has moved to https://github.com/ellipticaljs/polymer-behaviors
 
 # Installation
 
@@ -11,7 +9,7 @@ This repo is now deprecated. The project has moved to https://github.com/ellipti
 
 ``` bash
 
-bower install elliptical-behaviors
+bower install elliptical-polymer-behaviors
 
 ```
 
@@ -19,7 +17,7 @@ bower install elliptical-behaviors
 
 ``` bash
 
-git clone https://github.com/tachyon1337/elliptical-behaviors.git
+git clone https://github.com/ellipticaljs/polymer-behaviors.git
 bower install
 gulp demo
 python -m SimpleHTTPServer 8080
