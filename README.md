@@ -25,4 +25,4 @@ python -m SimpleHTTPServer 8080
 
 ```
 
-browser: localhost:8080/demo.html
+browser: localhost:8080

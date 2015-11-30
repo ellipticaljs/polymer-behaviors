@@ -24,6 +24,7 @@ gulp.task('demo',function(){
     fileStream('./demo/observable-list/**/*.*',BOWER + '/observable-list');
     fileStream('./component-behavior.html',BOWER_EB);
     fileStream('./observable-behavior.html',BOWER_EB);
+    fileStream('./demo/index.html','./');
     fileStream(BOOTSTRAP,BOWER_EB_DIST);
     fileStream(WEB_COMPONENTS,BOWER_EB_DIST);
 });
