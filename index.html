@@ -3,31 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo</title>
-    <script src="demo_components/elliptical-component/dist/webcomponents.js"></script>
+    <script src="demo_components/elliptical-polymer-behaviors/dist/webcomponents-lite.js"></script>
     <link rel="stylesheet" href="demo_components/elliptical-sass/dist/elliptical.css">
     <link rel="import" href="demo_components/sass-core-icons/sass-core-icons.html">
     <link rel="stylesheet" href="demo_components/css-docs/docs.css">
     <link rel="stylesheet" href="css/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic" rel="stylesheet">
+    <link rel="import" href="demo_components/mark-down/mark-down.html">
     <link rel="import" href="demo_components/hello-world/hello-world.html">
     <link rel="import" href="demo_components/observable-list/observable-list.html">
     <link rel="import" href="demo_components/profile-template/profile-template.html">
 </head>
 <body>
 <header>
-    <h4>Component Demo</h4>
+    <h4>Behaviors Demo</h4>
 </header>
 <section>
+    <script>
+        var address={
+            name:'Melissa Johnson',
+            street:'1800 West Dr',
+            city:'Charlotte',
+            state:'NC',
+            zip:88980,
+            phone:'555-555-0000'
+        };
+        Elliptical.viewData.set('address',address);
+    </script>
     <link rel="import" href="demo_components/mark-down/mark-down.html">
     <grid-row>
         <grid-columns class="default-12">
             <h3>Examples</h3>
             <hr>
-            <p></p>
+            <p>
+                Elliptical Behaviors for Polymer Components provides deep observable two-way data-binding without imperative wiring as well as implementing
+                dependency injection/service locator for tighter compatibility with the MVC design pattern.
+            </p>
             <h3 class="tag">Hello-World</h3>
             <hr>
             <hello-world></hello-world>
+            <mark-down class="margin-top two">
+                ```html
+                <xmp>
+                <dom-module module id="hello-world">
+                    <style>
+                        :host ::content h4{
+                            color:#9C27B0;
+                        }
+                    </style>
+                    <template>
+                        <h4 on-click="handleClick">Hello, World</h4>
+                    </template>
+                </dom-module>
+                </xmp>
+                ```
+                ```js
+                Polymer({
+                   is: 'hello-world',
+                   handleClick:function(event){
+                     console.log(event);
+                   }
+                });
+
+                ```
+            </mark-down>
             <p></p>
             <h3 class="tag">Observable-List</h3>
             <hr>
@@ -35,13 +75,72 @@
                 {#accounts}
                 <li>
                     <input type="text" data-bind="value:accounts.{$0}.name" value="{name}">&nbsp;&nbsp;
-                    <span data-index="{$0}" style="cursor:pointer;" on-click="_onClick" class="icon-core-trash"></span>
+                    <span data-index="{$0}" style="cursor:pointer;" click-event="onClick" class="icon-core-trash"></span>
                 </li>
                 {/accounts}
                 {^accounts}
                 <p class="warning">No data available...</p>
                 {/accounts}
             </observable-list>
+            <mark-down class="margin-top two">
+                ```html
+                <xmp>
+                <dom-module id="observable-list">
+                    <template>
+                        <style>
+                            :host{
+                                display:-webkit-flex;
+                                display:flex;
+                                flex-direction:column;
+                                -webkit-flex-direction: column;
+                            }
+                            :host>::content li{
+                                display:-webkit-flex;
+                                display:flex;
+                                width:400px;
+                                max-width:100%;
+                                margin:1em 0;
+                            }
+                            :host ::content p{
+                                border-radius:2px;
+                                padding:.5em;
+                                width:400px;
+                                max-width:100%;
+                            }
+                        </style>
+                        <content></content>
+                    </template>
+                </dom-module>
+                </xmp>
+                ```
+                ```js
+                Polymer({
+                  is: 'observable-list',
+                  behaviors: [
+                     Elliptical.ObservableBehavior
+                  ],
+                  ready:function(){
+                     var arr=[
+                         {name:'Bob Jackson',address:'7700 East Ave'},
+                         {name:'Steve Wright',address:'9300 West Blvd'},
+                         {name:'George Carlin',address:'14000 Kingsw Drive'}
+                     ];
+                     console.log('scope');
+                     this.$scope.accounts=arr;
+                  },
+
+                  onClick:function(event){
+                     var target=$(event.currentTarget);
+                     var index=target.attr('data-index');
+                     this.$scope.accounts.splice(index,1);
+                  },
+
+                  _onScopeChange:function(result){
+                     console.log(result);
+                  }
+                });
+                ```
+            </mark-down>
             <p></p>
             <h3 class="tag">Profile-Template</h3>
             <hr>
@@ -49,38 +148,143 @@
 
             <profile-template data='{"name":"Brad Thompson","street":"63289 Arlington Road"}'>
             </profile-template>
-            <section class="docs margin-top two">
-                <h4>this._data</h4>
-                <hr>
-                <flex-box class="space-between full-width row">
-                    <span>test</span>
-                    <flex-box class="column">
-                        <span></span>
-                    </flex-box>
-                    <flex-box class="column last">
-                        <span></span>
-                    </flex-box>
-                </flex-box>
-                <hr>
-                <flex-box class="space-between full-width row">
-                    <span>test2</span>
-                    <flex-box class="column">
-                        <span></span>
-                    </flex-box>
-                    <flex-box class="column last">
-                        <span></span>
-                    </flex-box>
-                </flex-box>
-            </section>
+
+            <mark-down class="margin-top">
+                ```html
+                <xmp>
+                <dom-module id="profile-template">
+                    <style>
+                        :host{
+                            display:block;
+                            width:400px;
+                            max-width:100%;
+                            margin-bottom:4em;
+                        }
+                        :host .flex-template{
+                            display:-webkit-flex;
+                            display:flex;
+                            -webkit-flex-direction:column;
+                            flex-direction:column;
+                        }
+                        :host h4 span{
+                            color:#009688;
+                        }
+                        :host .flex-template>*{
+                            margin:.25em 0;
+                        }
+                        :host .flex-template>div>span{
+                            margin-right:.5em;
+                            min-width:75px;
+                            display:inline-block;
+                        }
+                        :host .flex-template>div>input{
+                            min-width:200px;
+
+                        }
+                    </style>
+                    <template>
+                        <div class="flex-template" template>
+                            <h4><span data-bind="text:name">{name}</span></h4>
+                            <div>
+                                <span>Name: </span>
+                                <input type="text" data-bind="value:name" value="{name}">
+                            </div>
+                            <div>
+                                <span>Street: </span>
+                                <input type="text" data-bind="value:street" value="{street}">
+                            </div>
+                            <div>
+                                <span>City: </span>
+                                <input type="text" data-bind="value:city" value="{city}">
+                            </div>
+                            <div>
+                                <span>State: </span>
+                                <input type="text" data-bind="value:state" value="{state}">
+                            </div>
+                            <div>
+                                <span>Zip: </span>
+                                <input type="text" data-bind="value:zip" value="{zip}">
+                            </div>
+                            <div>
+                                <span>Phone: </span>
+                                <input type="text" data-bind="value:phone" value="{phone}">
+                            </div>
+                        </div>
+                    </template>
+                </dom-module>
+                </xmp>
+                ```
+                ```js
+                Polymer({
+                   is: 'profile-template',
+                   behaviors: [
+                      Elliptical.ObservableBehavior
+                   ],
+
+                   _onScopeChange:function(result){
+                      console.log(result);
+                   }
+                });
+
+                ```
+            </mark-down>
+
+            <h3 class="margin-top two">Documentation</h3>
+            <hr>
+            <p>
+              For component behaviors, such as dependency injection/service location:
+            </p>
+            <mark-down class="margin-top two">
+                ```html
+                <xmp>
+                <link rel="import" href="bower_components/elliptical-polymer-behaviors/component-behavior.html">
+                </xmp>
+                ```
+                ```js
+                Polymer({
+                   is: 'my-element',
+                   behaviors: [
+                      Elliptical.ComponentBehavior
+                   ]
+
+                });
+
+                ```
+            </mark-down>
+            <p class="margin-top two">
+                For observable, two-way data-binding behaviors:
+            </p>
+            <mark-down class="margin-top two">
+                ```html
+                <xmp>
+                <link rel="import" href="bower_components/elliptical-polymer-behaviors/observable-behavior.html">
+                </xmp>
+                ```
+                ```js
+                Polymer({
+                   is: 'my-element',
+                   behaviors: [
+                      Elliptical.ObservableBehavior
+                   ]
+
+                });
+
+                ```
+            </mark-down>
+
+            <p class="margin-top two">
+                For documentation on elliptical web components, click <a class="primary" href="http://ellipticaljs.github.io/component/" target="_blank">here</a>.
+            </p>
            </grid-columns>
     </grid-row>
 </section>
 <footer>
     <h5>Demo</h5>
     <flex-box class="links">
-        <a href="https://github.com/ellipticaljs/***/tree/gh-pages">Demo Source</a>
-        <a href="https://github.com/ellipticaljs/**">Project Home</a>
+        <a href="https://github.com/ellipticaljs/polymer-behaviors/tree/gh-pages">Demo Source</a>
+        <a href="https://github.com/ellipticaljs/polymer-behaviors">Project Home</a>
     </flex-box>
 </footer>
+
 </body>
 </html>
