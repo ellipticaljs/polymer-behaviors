@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/styles.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic" rel="stylesheet">
+    <link rel="import" href="demo_components/hello-world/hello-world.html">
+    <link rel="import" href="demo_components/observable-list/observable-list.html">
+    <link rel="import" href="demo_components/profile-template/profile-template.html">
 </head>
 <body>
 <header>
@@ -21,7 +24,31 @@
         <grid-columns class="default-12">
             <h3>Examples</h3>
             <hr>
-            <p>Text...</p>
+            <p></p>
+            <h3 class="tag">Hello-World</h3>
+            <hr>
+            <hello-world></hello-world>
+            <p></p>
+            <h3 class="tag">Observable-List</h3>
+            <hr>
+            <observable-list template test="two">
+                {#accounts}
+                <li>
+                    <input type="text" data-bind="value:accounts.{$0}.name" value="{name}">&nbsp;&nbsp;
+                    <span data-index="{$0}" style="cursor:pointer;" on-click="_onClick" class="icon-core-trash"></span>
+                </li>
+                {/accounts}
+                {^accounts}
+                <p class="warning">No data available...</p>
+                {/accounts}
+            </observable-list>
+            <p></p>
+            <h3 class="tag">Profile-Template</h3>
+            <hr>
+            <profile-template scope="address" object-assign="true"></profile-template>
+
+            <profile-template data='{"name":"Brad Thompson","street":"63289 Arlington Road"}'>
+            </profile-template>
             <section class="docs margin-top two">
                 <h4>this._data</h4>
                 <hr>
