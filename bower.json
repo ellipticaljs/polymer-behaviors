@@ -1,0 +1,50 @@
+{
+  "name": "elliptical-***",
+  "description": "gh-pages for project repo",
+  "version": "1.0.0",
+  "main": "index.html",
+  "authors": [
+    "S. Francis"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "observable",
+    "web",
+    "components"
+  ],
+  "homepage": "https://github.com/ellipticaljs/***",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    ".gitignore",
+    ".npmignore",
+    "gulpfile.js",
+    "lib",
+    "docs",
+    "index.js",
+    "umd.js",
+    "package.json",
+    "demo",
+    "index.html",
+    "build.json",
+    "bundle.json",
+    ".nvmrc",
+    ".eslintrc",
+    "bin",
+    "CHANGELOG.md",
+    "demos",
+    "stylesheets",
+    "_index.scss",
+    "bk"
+  ],
+  "dependencies": {
+    "elliptical-sass": "~1.1.12",
+    "css-docs": "elliptical-css-docs#~1.0.1",
+    "sass-core-icons": "~1.0.4",
+    "mark-down": "elliptical-mark-down#~1.0.5"
+  }
+}
