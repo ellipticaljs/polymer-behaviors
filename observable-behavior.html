@@ -59,17 +59,17 @@
         var channel=this.getAttribute('channel');
         var event=this.getAttribute('event');
 
-        if(scopeBind!==undefined) this.scopeBind=(scopeBind==='true');
+        if(scopeBind!==null) this.scopeBind=(scopeBind==='true');
         else this.scopeBind=true;
 
-        if(objectAssign) this.objectAssign=(objectAssign==='true');
+        if(objectAssign !==null) this.objectAssign=(objectAssign==='true');
         else this.objectAssign=false;
 
         if(scope) this.scope=scope;
 
         if(data) this.data=data;
 
-        if(autoRebind!==undefined) this.autoRebind=(autoRebind==='true');
+        if(autoRebind!==null) this.autoRebind=(autoRebind==='true');
         else this.autoRebind=true;
 
         if(channel)this.channel=channel;

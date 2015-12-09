@@ -15,14 +15,4 @@ bower install elliptical-polymer-behaviors
 
 ##demo
 
-``` bash
-
-git clone https://github.com/ellipticaljs/polymer-behaviors.git
-bower install
-gulp demo
-python -m SimpleHTTPServer 8080
-
-
-```
-
-browser: localhost:8080
+http://ellipticaljs.github.io/polymer-behaviors/
