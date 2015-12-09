@@ -4,6 +4,15 @@
 <script>
     //Base Component Behavior
     Elliptical.ComponentBehavior={};
+    Elliptical.ComponentBehavior.properties={
+
+        service:{
+            type:String,
+            value:null
+        }
+
+    };
+
     Object.assign(Elliptical.ComponentBehavior,elliptical.extensions.base);
     Elliptical.ComponentBehavior._createDataStore=function(){
         this._data={
@@ -34,24 +43,71 @@
         }
     };
 
+    Elliptical.ComponentBehavior._press=function(){
+        return ('ontouchend' in document) ? 'touchend' : 'click';
+    };
+
+    Elliptical.ComponentBehavior.__bindPressEvent=function(){
+        var self=this;
+        var data=this._data;
+        Object.defineProperty(data, 'press', {
+            get: function() { return self._press(); },
+            enumerable: true,
+            configurable: true
+        });
+    };
+
+    Elliptical.ComponentBehavior.__setElementProperties=function(){
+        var service=this.getAttribute('service');
+        if(service){
+            this.service=service;
+        }
+    };
+
     Elliptical.ComponentBehavior._disposeEventListener=function(){
         this.element.off(this._data.click,'[click-event]');
     };
 
 
-    Elliptical.ComponentBehavior.service=function(name){
+    Elliptical.ComponentBehavior.$service=function(name){
         if(name===undefined){
             name=this.service;
         }
         return elliptical.Container.getType(name);
     };
 
+    Elliptical.ComponentBehavior.$serviceAsync=function(name,callback){
+        if(name===undefined){
+            callback=name;
+            name=this.service;
+        }
+        elliptical.Container.getTypeAsync(name,callback);
+    };
+
+
+    Elliptical.ComponentBehavior._bindPublicElementMethods=function(){
+        var self=this;
+        var node=this;
+        node.hide=function(){
+            self._hide();
+        };
+
+        node.show=function(){
+            self._show();
+        };
+
+    };
+
+
     Elliptical.ComponentBehavior.created=function(){
         this.element=$(this);
         this._createDataStore();
         this._delegateEventListener();
+        this.__bindPressEvent();
         this._setOptionsFromAttribute();
+        this.__setElementProperties();
         this._setChildrenAttributes();
+        this._bindPublicElementMethods();
     };
 
     Elliptical.ComponentBehavior.detached=function(){

@@ -8,11 +8,6 @@
 
     Elliptical.ObservableBehavior.properties={
 
-        idProp:{
-            type:String,
-            value:'id'
-        },
-
         scopeBind:{
             type:Boolean,
             value:true
@@ -33,64 +28,84 @@
             value:null
         },
 
-        scopeSetterDelay:{
-            type:Number,
-            value:300
+        autoRebind:{
+            type:Boolean,
+            value:true
+        },
+
+        channel:{
+            type:String,
+            value:null
+        },
+
+        event:{
+            type:String,
+            value:null
         }
 
     };
 
     Elliptical.ObservableBehavior._viewBag=function(){
-        var $$=window.$$;
-        if($$){
-            if($$.elliptical)return $$.elliptical.context;
-            else{
-                return null;
-            }
-        }else{
-            return null;
-        }
+        if(!window.__viewData) window.__viewData={};
+        return window.__viewData;
     };
 
     Elliptical.ObservableBehavior._setOptions=function(){
-        var idProp=this.getAttribute('id-prop');
         var scopeBind=this.getAttribute('scope-bind');
         var objectAssign=this.getAttribute('object-assign');
         var scope=this.getAttribute('scope');
-        var scopeSetterDelay=this.getAttribute('scope-setter-delay');
         var data=this.getAttribute('data');
-        if(idProp){
-            this.idProp=idProp;
-        }
-        if(scopeBind){
-            this.scopeBind=(scopeBind=='true');
-        }
-        if(objectAssign){
-            this.objectAssign=(objectAssign=='true');
-        }
-        if(scope){
-            this.scope=scope;
-        }
-        if(data){
-            this.data=data;
-        }
-        if(scopeSetterDelay){
-            this.scopeSetterDelay=scopeSetterDelay;
-        }
+        var autoRebind=this.getAttribute('auto-rebind');
+        var channel=this.getAttribute('channel');
+        var event=this.getAttribute('event');
+
+        if(scopeBind!==undefined) this.scopeBind=(scopeBind==='true');
+        else this.scopeBind=true;
+
+        if(objectAssign) this.objectAssign=(objectAssign==='true');
+        else this.objectAssign=false;
+
+        if(scope) this.scope=scope;
+
+        if(data) this.data=data;
+
+        if(autoRebind!==undefined) this.autoRebind=(autoRebind==='true');
+        else this.autoRebind=true;
+
+        if(channel)this.channel=channel;
+        if(event) this.event=event;
+
     };
 
     Elliptical.ObservableBehavior.__setScope=function(){
         var data=this.data;
         if(data) return;
         var context=this._viewBag();
-        var scopeProp=this.scope;
-        this.$viewBag=context;
-        if(this.$scope && scopeProp && context){
-            if(this.objectAssign) this.$scope=context[scopeProp];
+        var scope=this.scope;
+        if(scope){
+            if(this.objectAssign) this.$scope=context[scope];
             else{
-                this.$scope[scopeProp]=context[scopeProp];
+                this.$scope[scope]=context[scope];
             }
         }
+    };
+
+    Elliptical.ObservableBehavior.__onTemplateVisibility=function(){
+        var node=this;
+        if(node.hasAttribute('ui-preload')) node.removeAttribute('ui-preload');
+        this._onTemplateVisibility();
+    };
+
+    Elliptical.ObservableBehavior._onTemplateVisibility=function(){};
+
+    Elliptical.ObservableBehavior._bindPublicComponentMethods=function(){
+        var self=this;
+        var node=this;
+        node.onScopeChange=function(callback){
+            self.__notify=function(result){
+                if(callback) callback(result);
+            }
+        };
     };
 
     Elliptical.ObservableBehavior.created=function(){
@@ -107,6 +122,7 @@
         this._initScopeElement();
         this._initTemplateElement();
         this.__setScope();
+        this._bindPublicComponentMethods();
     };
 
     Elliptical.ObservableBehavior.detached=function(){
