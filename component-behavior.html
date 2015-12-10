@@ -26,6 +26,8 @@
             click:'touchclick',
             hover:'touchhover'
         };
+
+        this._data.events=[];
     };
 
     //use click-event instead of on-click to avoid conflicts
@@ -112,6 +114,48 @@
 
     };
 
+    Elliptical.ComponentBehavior._event=function (element, event, selector,callback) {
+        var obj = {};
+        obj.element = element;
+        obj.event = event;
+
+        //support 3-4 params
+        var length = arguments.length;
+        if (length === 3) {
+            callback = (typeof selector === 'function') ? selector : null;
+            selector = null;
+        }
+        obj.selector = selector;
+        obj.callback = callback;
+        var arr = this._data.events;
+        if ($.inArray(obj, arr) === -1) this._data.events.push(obj);
+        if (selector) {
+            element.on(event, selector, function () {
+                var args = [].slice.call(arguments);
+                if (callback) callback.apply(this, args);
+            });
+        } else {
+            element.on(event, function () {
+                var args = [].slice.call(arguments);
+                if (callback) callback.apply(this, args);
+            });
+        }
+
+    };
+
+    Elliptical.ComponentBehavior._unbindEvents=function () {
+        var events = this._data.events;
+        var length = events.length;
+        for (var i = 0; i < length; i++) {
+            var obj = events[i];
+            (obj.selector) ? obj.element.off(obj.event, obj.selector) : obj.element.off(obj.event);
+        }
+        events.length = 0;
+        this._onUnbindEvents();
+    };
+
+    Elliptical.ComponentBehavior._onUnbindEvents=function(){};
+
 
     Elliptical.ComponentBehavior.created=function(){
         this.element=$(this);
@@ -127,6 +171,7 @@
 
     Elliptical.ComponentBehavior.detached=function(){
         this._disposeEventListener();
+        this._unbindEvents();
     };
 
     //Navigation Behavior
