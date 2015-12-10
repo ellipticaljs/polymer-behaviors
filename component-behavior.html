@@ -43,15 +43,29 @@
         }
     };
 
-    Elliptical.ComponentBehavior._press=function(){
+    Elliptical.ComponentBehavior.__press=function(){
         return ('ontouchend' in document) ? 'touchend' : 'click';
+    };
+
+    Elliptical.ComponentBehavior.__tap=function(){
+        return ('ontouchend' in document) ? 'tap' : 'click';
     };
 
     Elliptical.ComponentBehavior.__bindPressEvent=function(){
         var self=this;
         var data=this._data;
         Object.defineProperty(data, 'press', {
-            get: function() { return self._press(); },
+            get: function() { return self.__press(); },
+            enumerable: true,
+            configurable: true
+        });
+    };
+
+    Elliptical.ComponentBehavior.__bindTapEvent=function(){
+        var self=this;
+        var data=this._data;
+        Object.defineProperty(data, 'tap', {
+            get: function() { return self.__tap(); },
             enumerable: true,
             configurable: true
         });
@@ -104,6 +118,7 @@
         this._createDataStore();
         this._delegateEventListener();
         this.__bindPressEvent();
+        this.__bindTapEvent();
         this._setOptionsFromAttribute();
         this.__setElementProperties();
         this._setChildrenAttributes();
