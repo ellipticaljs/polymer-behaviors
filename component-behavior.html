@@ -156,6 +156,7 @@
 
     Elliptical.ComponentBehavior._onUnbindEvents=function(){};
 
+    Elliptical.ComponentBehavior._dispose=function(){};
 
     Elliptical.ComponentBehavior.created=function(){
         this.element=$(this);
@@ -172,6 +173,9 @@
     Elliptical.ComponentBehavior.detached=function(){
         this._disposeEventListener();
         this._unbindEvents();
+        this._dispose();
+        this._data._store=null;
+        this._data.events.length=0;
     };
 
     //Navigation Behavior
