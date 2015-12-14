@@ -22,3 +22,8 @@ Elliptical.viewData={
         window.__viewData={};
     }
 };
+
+//Registration
+Elliptical.registerElement=function(tag){
+    if(document.createElement(tag).constructor !== HTMLElement) document.registerElement(tag);
+};
