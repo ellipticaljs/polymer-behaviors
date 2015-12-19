@@ -3,7 +3,7 @@
 <link rel="import" href="../elliptical-event/elliptical-event.html">
 
 <script>
-    Elliptical.ObservableBehavior=Elliptical.ComponentBehavior;
+    Elliptical.ObservableBehavior=Object.assign({},Elliptical.ComponentBehavior);
     Object.assign(Elliptical.ObservableBehavior,elliptical.observable.cache,elliptical.observable.pubsub,elliptical.observable.scope,elliptical.observable.template);
 
     Elliptical.ObservableBehavior.properties={
@@ -117,7 +117,7 @@
         var $cache=this.$cache();
         this._data.set('$cache',$cache);
         this._data.set('subscriptions',[]);
-        this._subscriptions();
+        this._bindSubscriptions();
         this._setOptions();
         this._initScopeElement();
         this._initTemplateElement();
