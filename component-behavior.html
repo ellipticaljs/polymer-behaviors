@@ -105,13 +105,22 @@
     Elliptical.ComponentBehavior._bindPublicElementMethods=function(){
         var self=this;
         var node=this;
-        node.hide=function(){
-            self._hide();
-        };
-
-        node.show=function(){
-            self._show();
-        };
+        if(!node._show){
+            node._show=function(){};
+        }
+        if(!node._hide){
+            node._hide=function(){};
+        }
+        if(!node.show){
+            node.show=function(){
+                self._show();
+            };
+        }
+        if(!node.hide){
+            node.hide=function(){
+                self._hide();
+            };
+        }
 
     };
 
