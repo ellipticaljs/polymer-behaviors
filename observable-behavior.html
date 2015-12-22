@@ -126,11 +126,13 @@
     };
 
     Elliptical.ObservableBehavior.detached=function(){
-        this._disposeEventListener();
+        this._destroy();
         this._disposeCache();
         this._disposePubSub();
         this._disposeScope();
         this._disposeTemplate();
+        this._data._store=null;
+        this._data.events.length=0;
     };
 
 

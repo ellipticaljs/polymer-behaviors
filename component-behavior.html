@@ -179,11 +179,15 @@
         this._setChildrenAttributes();
         this._bindPublicElementMethods();
     };
-
-    Elliptical.ComponentBehavior.detached=function(){
+    Elliptical.ComponentBehavior._destroy=function(){
         this._disposeEventListener();
         this._unbindEvents();
         this._dispose();
+    };
+
+
+    Elliptical.ComponentBehavior.detached=function(){
+        this._destroy();
         this._data._store=null;
         this._data.events.length=0;
     };
