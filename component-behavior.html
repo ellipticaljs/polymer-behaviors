@@ -31,6 +31,11 @@
         this._data.events=[];
     };
 
+    Elliptical.ComponentBehavior._location=function(url){
+        if(window._location) window._location.href=url;
+        else location.href=url;
+    };
+
     //use click-event instead of on-click to avoid conflicts
     Elliptical.ComponentBehavior._delegateEventListener=function(){
         this.element.on(this._data.click,'[click-event]',this._listenerCallback.bind(this));
