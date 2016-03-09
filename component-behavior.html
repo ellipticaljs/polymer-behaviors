@@ -51,6 +51,11 @@
         }
     };
 
+    Elliptical.ComponentBehavior._viewData=function(prop){
+        if(!window.__viewData) window.__viewData={};
+        return window.__viewData;
+    };
+
     Elliptical.ComponentBehavior.__press=function(){
         return ('ontouchend' in document) ? 'touchend' : 'click';
     };
@@ -184,6 +189,9 @@
         this._setChildrenAttributes();
         this._bindPublicElementMethods();
     };
+
+
+
     Elliptical.ComponentBehavior._destroy=function(){
         this._disposeEventListener();
         this._unbindEvents();
