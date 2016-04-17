@@ -178,6 +178,8 @@
 
     Elliptical.ComponentBehavior._dispose=function(){};
 
+
+
     Elliptical.ComponentBehavior.created=function(){
         this.element=$(this);
         this._createDataStore();
@@ -188,6 +190,7 @@
         this.__setElementProperties();
         this._setChildrenAttributes();
         this._bindPublicElementMethods();
+
     };
 
 

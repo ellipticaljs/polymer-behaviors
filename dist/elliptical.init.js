@@ -7,21 +7,7 @@ window.Elliptical = function (fn) {
     });
 };
 
-Elliptical.viewData={
-    get:function(){
-        if(!window.__viewData){
-            window.__viewData={};
-        }
-        return window.__viewData;
-    },
-    set:function(prop,val){
-        var context=this.get();
-        context[prop]=val;
-    },
-    clear:function(){
-        window.__viewData={};
-    }
-};
+
 
 //Registration
 Elliptical.registerElement=function(tag){
