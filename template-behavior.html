@@ -38,6 +38,11 @@
             value:false
         },
 
+        directAssign:{
+            type:Boolean,
+            value:false
+        },
+
         autoBind:{
             type:Boolean,
             value:false
@@ -78,7 +83,7 @@
         this._templateId=id;
         return id;
     };
-    
+
     Elliptical.TemplateBehavior._onTemplateVisibility=function(){};
 
     Elliptical.TemplateBehavior._setTemplateVisibility=function(){
@@ -207,7 +212,8 @@
         if(this.objectAssign) this.$scope=context[scope];
         else{
             this.$scope=this.$scope || {};
-            this.$scope[scope]=context[scope];
+            if(this.directAssign) this.$scope=context;
+            else this.$scope[scope]=context[scope];
         }
         if(this._onScopeBinding) this._onScopeBinding();
     };
@@ -218,6 +224,7 @@
         var data=this.data;
         var context;
         if(data){
+            this.directAssign=true;
             if(typeof data==='string') context=JSON.parse(data);
             else context=data;
             this._assignScope(context);
