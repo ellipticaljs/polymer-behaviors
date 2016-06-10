@@ -100,7 +100,8 @@
         if(name===undefined){
             name=this.service;
         }
-        return elliptical.Container.getType(name);
+
+        return elliptical.container.getType(name);
     };
 
     Elliptical.ComponentBehavior.$serviceAsync=function(name,callback){
@@ -108,7 +109,8 @@
             callback=name;
             name=this.service;
         }
-        elliptical.Container.getTypeAsync(name,callback);
+
+        elliptical.container.getTypeAsync(name,callback);
     };
 
 

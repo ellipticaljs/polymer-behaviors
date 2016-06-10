@@ -1,7 +1,7 @@
 {
   "name": "elliptical-polymer-behaviors",
   "main": "component-behavior.html",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "authors": [
     "S. Francis"
   ],
@@ -37,7 +37,7 @@
   "dependencies": {
     "component-extensions": "~1.0.1",
     "elliptical-mutation-summary": "~1.0.1",
-    "elliptical-container": "~1.0.1",
+    "elliptical-container": "~1.1.0",
     "Elliptical-micro": "~1.0.0",
     "elliptical-dust-helpers": "~1.0.1",
     "elliptical-template-extensions": "~1.0.6"
