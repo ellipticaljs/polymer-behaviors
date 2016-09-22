@@ -180,6 +180,9 @@
 
     Elliptical.ComponentBehavior._dispose=function(){};
 
+    Elliptical.ComponentBehavior._deviceClickEvent=function(){
+      return ('ontouchend' in document) ? 'touchend' : 'click';
+    };
 
 
     Elliptical.ComponentBehavior.created=function(){

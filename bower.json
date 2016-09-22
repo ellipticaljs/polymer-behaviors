@@ -1,7 +1,7 @@
 {
   "name": "elliptical-polymer-behaviors",
   "main": "component-behavior.html",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "authors": [
     "S. Francis"
   ],
@@ -43,7 +43,8 @@
     "elliptical-template-extensions": "~1.0.6",
     "elliptical-viewdata":"~1.0.3",
     "elliptical-utils":"~2.1.2",
-    "async-import":"~1.0.1"
+    "async-import":"~1.0.1",
+    "gsap-import": "~1.0.1"
   },
   "devDependencies": {
     "paper-button": "PolymerElements/paper-button#^1.0.0",

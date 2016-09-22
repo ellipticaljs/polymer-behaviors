@@ -18,6 +18,11 @@
             value:null
         },
 
+        _template:{
+            type:Object,
+            value:null
+        },
+
         $scope:{
             type:Object,
             value:null
@@ -77,11 +82,15 @@
     };
 
     Elliptical.TemplateBehavior._setTemplateId=function(node){
-        if(!node) return;
-        var id='tmpl-' + elliptical.utils.random.str(6);
-        node.setAttribute('template',id);
-        this._templateId=id;
-        return id;
+      if(!node) return;
+      var id='tmpl-' + elliptical.utils.random.str(6);
+      node.setAttribute('template',id);
+      this._templateId=id;
+      return id;
+    };
+
+    Elliptical.TemplateBehavior._setTemplateExtensions=function(){
+      this._template=elliptical.extensions.template;
     };
 
     Elliptical.TemplateBehavior._onTemplateVisibility=function(){};
